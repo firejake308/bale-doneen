@@ -1,0 +1,26 @@
+<!DOCTYPE hmtl>
+<html>
+    <head>
+        <title>Bale-Doneen Chart Generator</title>
+        <link rel="stylesheet" type="text/css" href="https://dy2j7zawvtj7i.cloudfront.net/login-with-athenahealth/latest/css/ah-login-button.min.css">
+    </head>
+    <body>
+        <h1>Bale-Doneen Chart Generator</h1>
+        <script src="https://dy2j7zawvtj7i.cloudfront.net/login-with-athenahealth/latest/js/ah-login-button.min.js"></script>
+        <div onclick="ahLoginOnClickHandler(
+            {
+            client_id: 'foo',  // All these values should be provided by back end serving up this page.
+            redirect_uri: 'http://google.com', // Replace with your app's redirect_uri.
+            nonce: 'nonce',
+            scope: 'scope',
+            state: 'state',
+            })" class="btn athenahealthsignin logo_white">
+        <div class="ah_login_left_div">
+            Log in with 					
+        </div>
+        <div class="ah_login_right_div">
+            <img class="logo" alt="athenahealth" title="athenahealth" src="https://dy2j7zawvtj7i.cloudfront.net/login-with-athenahealth/latest/img/athenahealth_logo_white.svg">
+        </div>
+    </div>
+    </body>
+</html>
