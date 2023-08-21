@@ -6,6 +6,46 @@
     </head> 
     <body>
         <h1>Bale-Doneen Chart Generator</h1>
+        <script type="text/javascript" src="https://unpkg.com/jso/dist/jso.js"></script>
+        <script>
+            function thirdLogin() {
+                let client = new JSO({
+                    providerID: "athenahealth",
+                    client_id: "0oako84yyvzTfLZI6297",
+                    redirect_uri: "https://bale-doneen.app/charts",
+                    authorization: "https://api.preview.platform.athenahealth.com/oauth2/v1/authorize",
+                    scopes: { request: ["openid"]}
+                })
+            }
+        </script>
+        <button onclick="thirdLogin()">Third Login Button</button>
+        <script>
+            async function sha256(message) {
+                // encode as UTF-8
+                const msgBuffer = new TextEncoder().encode(message);                    
+
+                // hash the message
+                const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+
+                // convert ArrayBuffer to Array
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+                // convert bytes to hex string                  
+                const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                return hashHex;
+            }
+            function myLoginHandler() {
+                const codeVerifier = btoa(Math.random().toString());
+                sha256(codeVerifier).then(code => 
+                    fetch(`https://api.preview.platform.athenahealth.com/oauth2/v1/authorize`
+                    + `?client_id=0oako84yyvzTfLZI6297&response_type=code`
+                    +`&redirect_uri=${encodeURIComponent('https://bale-doneen.netlify.app/charts')}`
+                    +`&scope=openid&state=whatever&nonce=helpme`
+                    +`&code_challenge=${code}&code_challenge_method=S256`)
+                );
+            }
+        </script>
+        <button onclick="myLoginHandler()">Second Login Button</button>
         <script src="https://dy2j7zawvtj7i.cloudfront.net/login-with-athenahealth/latest/js/ah-login-button.min.js"></script>
         <div onclick="ahLoginOnClickHandler(
             {
@@ -14,6 +54,8 @@
             nonce: 'nonce',
             scope: 'scope',
             state: 'state',
+            code_challenge: sha256('code'),
+            code_challenge_method: 'S256',
             })" class="btn athenahealthsignin logo_white">
         <div class="ah_login_left_div">
             Log in with 					
